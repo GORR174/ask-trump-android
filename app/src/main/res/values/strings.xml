@@ -4,5 +4,8 @@
     <string name="asktrump_ask_button">Ask</string>
     <string name="menu_info">Information</string>
     <string name="info_title">Information</string>
-    <string name="info_message">This application was made for fun.\nCatstack 2019.</string>
+    <string name="info_message">This application was made for fun by Catstack Team in 2019.</string>
+    <string name="info_rate_button">Rate us</string>
+    <string name="info_twitter_button">Our Twitter</string>
+    <string name="info_cancel_button">Cancel</string>
 </resources>

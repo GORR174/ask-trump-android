@@ -1,5 +1,7 @@
 package ru.catstack.asktrump.fragments
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AlertDialog
@@ -77,11 +79,24 @@ class AskTrumpFragment : Fragment() {
     }
 
     private fun onMenuInfoButtonClicked() {
-        val dialogBuilder = AlertDialog.Builder(context!!)
-
-        dialogBuilder.apply {
+        AlertDialog.Builder(context!!).apply {
             setTitle(R.string.info_title)
             setMessage(R.string.info_message)
+            setPositiveButton(R.string.info_cancel_button) { _, _ -> }
+            setNeutralButton(R.string.info_twitter_button) { _, _ ->
+                val browserIntent = Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://twitter.com/catstack_team")
+                )
+                startActivity(browserIntent)
+            }
+            setNegativeButton(R.string.info_rate_button) { _, _ ->
+                val browserIntent = Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://play.google.com/store/apps/details?id=ru.catstack.asktrump")
+                )
+                startActivity(browserIntent)
+            }
             show()
         }
     }
