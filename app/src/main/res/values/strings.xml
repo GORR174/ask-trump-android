@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Ask Trump</string>
+    <string name="asktrump_question_placeholder">Write your question</string>
+    <string name="asktrump_ask_button">Ask</string>
+    <string name="menu_info">Information</string>
+    <string name="info_title">Information</string>
+    <string name="info_message">This application was made for fun.\nCatstack 2019.</string>
+</resources>
