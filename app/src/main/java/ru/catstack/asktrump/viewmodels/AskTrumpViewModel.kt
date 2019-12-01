@@ -8,35 +8,36 @@ import ru.catstack.asktrump.enums.Answers
 import ru.catstack.asktrump.repositories.IAnswersRepo
 import ru.catstack.asktrump.repositories.RandomAnswersRepo
 
-enum class AskTrumpFragmentState {
+enum class TrumpImageState {
     NO, YES, DUNNO, LOADING, NO_QUESTION
 }
 
 class AskTrumpViewModel : ViewModel() {
     private val answersRepo: IAnswersRepo = RandomAnswersRepo()
-    val state = BehaviorSubject.createDefault(AskTrumpFragmentState.NO_QUESTION)!!
+    val state = BehaviorSubject.createDefault(TrumpImageState.NO_QUESTION)!!
+    val adRequest = BehaviorSubject.create<AdRequest>()!!
 
     fun getAnswer() {
         CoroutineScope(Dispatchers.Main).launch {
-            state.onNext(AskTrumpFragmentState.LOADING)
+            state.onNext(TrumpImageState.LOADING)
             val answer = answersRepo.getAnswer()
 
             state.onNext(
                 when (answer) {
-                    Answers.YES -> AskTrumpFragmentState.YES
-                    Answers.NO -> AskTrumpFragmentState.NO
-                    Answers.IDK -> AskTrumpFragmentState.DUNNO
+                    Answers.YES -> TrumpImageState.YES
+                    Answers.NO -> TrumpImageState.NO
+                    Answers.IDK -> TrumpImageState.DUNNO
                 }
             )
         }
     }
 
     fun textFieldChanged() {
-        if (state.value != AskTrumpFragmentState.NO_QUESTION)
-            state.onNext(AskTrumpFragmentState.NO_QUESTION)
+        if (state.value != TrumpImageState.NO_QUESTION)
+            state.onNext(TrumpImageState.NO_QUESTION)
     }
 
     fun loadAd() {
-        val adRequest = AdRequest.Builder().build()
+        adRequest.onNext(AdRequest.Builder().build())
     }
 }
