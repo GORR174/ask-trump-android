@@ -1,4 +1,4 @@
-package ru.catstack.asktrump.repositories
+package ru.catstack.asktrump.data
 
 import ru.catstack.asktrump.enums.Answers
 

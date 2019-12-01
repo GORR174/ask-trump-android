@@ -1,4 +1,4 @@
-package ru.catstack.asktrump.activity
+package ru.catstack.asktrump.presentation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

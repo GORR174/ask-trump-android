@@ -14,7 +14,7 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="@string/ads_app_id"/>
-        <activity android:name=".activity.MainActivity"
+        <activity android:name="ru.catstack.asktrump.presentation.MainActivity"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait">

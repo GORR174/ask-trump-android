@@ -1,4 +1,4 @@
-package ru.catstack.asktrump.fragments
+package ru.catstack.asktrump.presentation.asktrump
 
 import android.content.Intent
 import android.net.Uri
@@ -9,12 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.core.widget.addTextChangedListener
 import kotlinx.android.synthetic.main.ask_trump_fragment.*
 import ru.catstack.asktrump.R
-import ru.catstack.asktrump.viewmodels.TrumpImageState
-import ru.catstack.asktrump.viewmodels.AskTrumpViewModel
 
 class AskTrumpFragment : Fragment() {
 
-    private val viewModel = AskTrumpViewModel()
+    private val viewModel =
+        AskTrumpViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

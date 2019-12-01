@@ -1,12 +1,12 @@
-package ru.catstack.asktrump.viewmodels
+package ru.catstack.asktrump.presentation.asktrump
 
 import androidx.lifecycle.ViewModel
 import com.google.android.gms.ads.AdRequest
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import kotlinx.coroutines.*
 import ru.catstack.asktrump.enums.Answers
-import ru.catstack.asktrump.repositories.IAnswersRepo
-import ru.catstack.asktrump.repositories.RandomAnswersRepo
+import ru.catstack.asktrump.data.IAnswersRepo
+import ru.catstack.asktrump.data.RandomAnswersRepo
 
 enum class TrumpImageState {
     NO, YES, DUNNO, LOADING, NO_QUESTION
