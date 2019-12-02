@@ -82,13 +82,6 @@ class AskTrumpFragment : Fragment() {
             setTitle(R.string.info_title)
             setMessage(R.string.info_message)
             setPositiveButton(R.string.info_cancel_button) { _, _ -> }
-            setNeutralButton(R.string.info_twitter_button) { _, _ ->
-                val browserIntent = Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse("https://twitter.com/catstack_team")
-                )
-                startActivity(browserIntent)
-            }
             setNegativeButton(R.string.info_rate_button) { _, _ ->
                 val browserIntent = Intent(
                     Intent.ACTION_VIEW,
