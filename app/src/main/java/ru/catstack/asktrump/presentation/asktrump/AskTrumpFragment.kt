@@ -12,8 +12,7 @@ import ru.catstack.asktrump.R
 
 class AskTrumpFragment : Fragment() {
 
-    private val viewModel =
-        AskTrumpViewModel()
+    private val viewModel = AskTrumpViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +46,7 @@ class AskTrumpFragment : Fragment() {
 
     private fun setTrumpImage(state: TrumpImageState) {
         trumpImageView.setImageResource(
-            when(state) {
+            when (state) {
                 TrumpImageState.NO -> R.drawable.trump_no
                 TrumpImageState.YES -> R.drawable.trump_yes
                 TrumpImageState.DUNNO -> R.drawable.trump_idk
