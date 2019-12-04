@@ -7,6 +7,7 @@ import android.view.*
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.ask_trump_fragment.*
 import ru.catstack.asktrump.R
 
@@ -29,18 +30,18 @@ class AskTrumpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.state.subscribe {
+        viewModel.state.observe(this, Observer {
             val isFieldsBlocked = it == TrumpImageState.LOADING
             blockFields(isFieldsBlocked)
 
             setTrumpImage(it)
-        }
+        })
 
         askButton.setOnClickListener { viewModel.getAnswer() }
 
         questionTextField.addTextChangedListener { viewModel.textFieldChanged() }
 
-        viewModel.adRequest.subscribe(adView::loadAd)
+        viewModel.adRequest.observe(this, Observer { adView::loadAd })
         viewModel.loadAd()
     }
 

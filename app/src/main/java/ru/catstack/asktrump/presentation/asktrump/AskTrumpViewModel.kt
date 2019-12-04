@@ -1,8 +1,9 @@
 package ru.catstack.asktrump.presentation.asktrump
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.gms.ads.AdRequest
-import io.reactivex.rxjava3.subjects.BehaviorSubject
 import kotlinx.coroutines.*
 import ru.catstack.asktrump.enums.Answers
 import ru.catstack.asktrump.data.IAnswersRepo
@@ -14,30 +15,31 @@ enum class TrumpImageState {
 
 class AskTrumpViewModel : ViewModel() {
     private val answersRepo: IAnswersRepo = RandomAnswersRepo()
-    val state = BehaviorSubject.createDefault(TrumpImageState.NO_QUESTION)!!
-    val adRequest = BehaviorSubject.create<AdRequest>()!!
+
+    private val mutableState = MutableLiveData<TrumpImageState>()
+    val state: LiveData<TrumpImageState> = mutableState
+
+    private val mutableAdRequest = MutableLiveData<AdRequest>()
+    val adRequest: LiveData<AdRequest> = mutableAdRequest
 
     fun getAnswer() {
         CoroutineScope(Dispatchers.Main).launch {
-            state.onNext(TrumpImageState.LOADING)
+            mutableState.value = TrumpImageState.LOADING
             val answer = answersRepo.getAnswer()
-
-            state.onNext(
-                when (answer) {
-                    Answers.YES -> TrumpImageState.YES
-                    Answers.NO -> TrumpImageState.NO
-                    Answers.IDK -> TrumpImageState.DUNNO
-                }
-            )
+            mutableState.value = when (answer) {
+                Answers.YES -> TrumpImageState.YES
+                Answers.NO -> TrumpImageState.NO
+                Answers.IDK -> TrumpImageState.DUNNO
+            }
         }
     }
 
     fun textFieldChanged() {
         if (state.value != TrumpImageState.NO_QUESTION)
-            state.onNext(TrumpImageState.NO_QUESTION)
+            mutableState.value = TrumpImageState.NO_QUESTION
     }
 
     fun loadAd() {
-        adRequest.onNext(AdRequest.Builder().build())
+        mutableAdRequest.value = AdRequest.Builder().build()
     }
 }
