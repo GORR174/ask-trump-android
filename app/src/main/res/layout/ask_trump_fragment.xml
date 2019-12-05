@@ -39,6 +39,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/trumpImageView"
             android:autofillHints=""
+            android:imeOptions="actionDone"
             tools:targetApi="o" />
 
         <Button

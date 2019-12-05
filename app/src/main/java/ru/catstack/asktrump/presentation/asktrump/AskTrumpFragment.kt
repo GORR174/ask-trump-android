@@ -3,6 +3,7 @@ package ru.catstack.asktrump.presentation.asktrump
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.view.*
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
@@ -30,31 +31,35 @@ class AskTrumpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.state.observe(this, Observer {
-            val isFieldsBlocked = it == TrumpImageState.LOADING
-            blockFields(isFieldsBlocked)
-
-            setTrumpImage(it)
-        })
+        viewModel.questionAnswer.observe(this, Observer(this::setTrumpImage))
 
         askButton.setOnClickListener { viewModel.getAnswer() }
 
         questionTextField.addTextChangedListener { viewModel.textFieldChanged() }
 
-        viewModel.adRequest.observe(this, Observer { adView::loadAd })
+        viewModel.adRequest.observe(this, Observer(adView::loadAd))
         viewModel.loadAd()
     }
 
-    private fun setTrumpImage(state: TrumpImageState) {
-        trumpImageView.setImageResource(
-            when (state) {
-                TrumpImageState.NO -> R.drawable.trump_no
-                TrumpImageState.YES -> R.drawable.trump_yes
-                TrumpImageState.DUNNO -> R.drawable.trump_idk
-                TrumpImageState.LOADING -> R.drawable.trump_thinking
-                TrumpImageState.NO_QUESTION -> R.drawable.trump_waiting
-            }
-        )
+    private fun setTrumpImage(state: AnswerState) {
+        val imageResource = when (state) {
+            AnswerState.NO -> R.drawable.trump_no
+            AnswerState.YES -> R.drawable.trump_yes
+            AnswerState.DUNNO -> R.drawable.trump_idk
+            AnswerState.NO_QUESTION -> R.drawable.trump_waiting
+        }
+
+        if (state == AnswerState.NO_QUESTION) {
+            trumpImageView.setImageResource(imageResource)
+        } else {
+            blockFields(true)
+            trumpImageView.setImageResource(R.drawable.trump_thinking)
+
+            Handler().postDelayed({
+                trumpImageView.setImageResource(imageResource)
+                blockFields(false)
+            }, 2500)
+        }
     }
 
     private fun blockFields(isBlocked: Boolean) {
