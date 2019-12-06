@@ -26,13 +26,15 @@ class AskTrumpViewModel : ViewModel() {
         mutableQuestionAnswer.value = AnswerState.NO_QUESTION
     }
 
-    fun getAnswer() {
-        CoroutineScope(Dispatchers.Main).launch {
-            val answer = answersRepo.getRandomAnswer()
-            mutableQuestionAnswer.value = when (answer) {
-                Answers.YES -> AnswerState.YES
-                Answers.NO -> AnswerState.NO
-                Answers.IDK -> AnswerState.DUNNO
+    fun getAnswer(question: String) {
+        if (question.isNotBlank()) {
+            CoroutineScope(Dispatchers.Main).launch {
+                val answer = answersRepo.getRandomAnswer()
+                mutableQuestionAnswer.value = when (answer) {
+                    Answers.YES -> AnswerState.YES
+                    Answers.NO -> AnswerState.NO
+                    Answers.IDK -> AnswerState.DUNNO
+                }
             }
         }
     }

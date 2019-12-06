@@ -33,7 +33,7 @@ class AskTrumpFragment : Fragment() {
 
         viewModel.questionAnswer.observe(this, Observer(this::setTrumpImage))
 
-        askButton.setOnClickListener { viewModel.getAnswer() }
+        askButton.setOnClickListener { viewModel.getAnswer(questionTextField.text.toString()) }
 
         questionTextField.addTextChangedListener { viewModel.textFieldChanged() }
 
