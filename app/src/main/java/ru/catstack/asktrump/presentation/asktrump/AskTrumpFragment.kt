@@ -47,18 +47,21 @@ class AskTrumpFragment : Fragment() {
             AnswerState.YES -> R.drawable.trump_yes
             AnswerState.DUNNO -> R.drawable.trump_idk
             AnswerState.NO_QUESTION -> R.drawable.trump_waiting
+            AnswerState.ALREADY_ANSWERED -> R.drawable.trump_repeat
         }
 
-        if (state == AnswerState.NO_QUESTION) {
-            trumpImageView.setImageResource(imageResource)
-        } else {
-            blockFields(true)
-            trumpImageView.setImageResource(R.drawable.trump_thinking)
-
-            Handler().postDelayed({
+        when (state) {
+            AnswerState.NO_QUESTION, AnswerState.ALREADY_ANSWERED ->
                 trumpImageView.setImageResource(imageResource)
-                blockFields(false)
-            }, 2500)
+            else -> {
+                blockFields(true)
+                trumpImageView.setImageResource(R.drawable.trump_thinking)
+
+                Handler().postDelayed({
+                    trumpImageView.setImageResource(imageResource)
+                    blockFields(false)
+                }, 2500)
+            }
         }
     }
 

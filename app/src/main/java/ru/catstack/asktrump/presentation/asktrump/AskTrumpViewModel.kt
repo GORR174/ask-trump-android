@@ -10,7 +10,7 @@ import ru.catstack.asktrump.data.IAnswersRepo
 import ru.catstack.asktrump.data.RandomAnswersRepo
 
 enum class AnswerState {
-    NO, YES, DUNNO, NO_QUESTION
+    NO, YES, DUNNO, NO_QUESTION, ALREADY_ANSWERED
 }
 
 class AskTrumpViewModel : ViewModel() {
@@ -22,12 +22,20 @@ class AskTrumpViewModel : ViewModel() {
     private val mutableAdRequest = MutableLiveData<AdRequest>()
     val adRequest: LiveData<AdRequest> = mutableAdRequest
 
+    private val questions = ArrayList<String>()
+
     init {
         mutableQuestionAnswer.value = AnswerState.NO_QUESTION
     }
 
     fun getAnswer(question: String) {
         if (question.isNotBlank()) {
+            if (questions.contains(question)) {
+                mutableQuestionAnswer.value = AnswerState.ALREADY_ANSWERED
+                return
+            }
+            questions.add(question)
+
             CoroutineScope(Dispatchers.Main).launch {
                 val answer = answersRepo.getRandomAnswer()
                 mutableQuestionAnswer.value = when (answer) {
